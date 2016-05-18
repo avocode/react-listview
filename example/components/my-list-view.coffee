@@ -5,6 +5,7 @@ React = require 'react'
 
 ListView = React.createFactory require '../../src/'
 SimpleListItem = React.createFactory require './simple-list-item'
+SimpleListSubItem = React.createFactory require './simple-list-subitem'
 FoldableListItem = React.createFactory require './foldable-list-item'
 
 module.exports = React.createClass
@@ -35,6 +36,17 @@ module.exports = React.createClass
       when 'ArrowRight'
         return { expandSelection: true }
 
+  _processShortcut: (type) ->
+    switch type
+      when 'LIST_VIEW:UP'
+        return { moveSelection: -1 }
+      when 'LIST_VIEW:DOWN'
+        return { moveSelection: +1 }
+      when 'LIST_VIEW:LEFT'
+        return { collapseSelection: true }
+      when 'LIST_VIEW:RIGHT'
+        return { expandSelection: true }
+
   _getItemById: (itemId) ->
     foundItem = null
     @props.things.forEach (item) ->
@@ -52,12 +64,17 @@ module.exports = React.createClass
       items: @state.listItems
       selectedItemId: @state.selectedListItemId
       collapsedItemIds: @state.collapsedListItemIds
-      processKeyPress: @_handleListKeyPress
+      handler: @_processShortcut
+      useShortcuts: true
       renderItem: (itemId, parentItemIds = []) =>
         item = @_getItemById(itemId)
         if parentItemIds.length == 0
-          SimpleListItem
-            item: item
+          if item.children?.size > 0
+            SimpleListItem
+              item: item
+          else
+            FoldableListItem
+              item: item
         else
-          FoldableListItem
+          SimpleListSubItem
             item: item

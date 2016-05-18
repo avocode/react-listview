@@ -1,5 +1,6 @@
+classNames = require 'classnames'
 immutable = require 'immutable'
-createMousetrap = require 'mousetrap'
+Shortcuts = React.createFactory require 'react-shortcuts/component'
 
 { div } = require 'reactionary'
 
@@ -16,9 +17,18 @@ React.createClass
       React.PropTypes.string
     ])
     collapsedItemIds: React.PropTypes.object.isRequired
-    processKeyPress: React.PropTypes.func
+    handler: React.PropTypes.func
+    useShortcuts: React.PropTypes.bool
     renderItem: React.PropTypes.func
+    selectedItemClass: React.PropTypes.string
+    onCollapseItem: React.PropTypes.func
+    onSelectedItemIdChange: React.PropTypes.func
     # TODO: add default collapsing prop
+
+  getDefaultProps: ->
+    selectedItemClass: 'selected'
+    useShortcuts: false
+
 
   getInitialState: ->
     selectedItemId: @props.selectedItemId
@@ -59,20 +69,24 @@ React.createClass
 
     return isParent and !isFolded
 
+  _updateSelectedItemId: (newItemId) ->
+    @setState selectedItemId: newItemId
+    @props.onSelectedItemIdChange?(newItemId)
+
   # TODO: refactor
   _moveSelection: (step) ->
     selectedItem = @_getItemById(@state.selectedItemId)
     selectedItemPath = @_findSelectedItemPath(@props.items)
 
     if @_isUnfoldedParent(selectedItem) and @_normalizeParentStep(step) is 1
-      @setState selectedItemId: selectedItem.children.first().id
+      @_updateSelectedItemId(selectedItem.children.first().id)
     else if selectedItemPath?.length == 1
       itemIndex = (selectedItemPath[0] + Number(step)) % @props.items.size
       candidate = @props.items.get(itemIndex)
       if @_isUnfoldedParent(candidate) and @_normalizeParentStep(step) is -1
-        @setState selectedItemId: candidate.children.last().id
+        @_updateSelectedItemId(candidate.children.last().id)
       else if candidate
-        @setState selectedItemId: candidate.id
+        @_updateSelectedItemId(candidate.id)
       else
         throw new Error('bad top-level selectedItemPath')
     else if selectedItemPath?.length > 1
@@ -81,13 +95,14 @@ React.createClass
       itemIndex = selectedItemPath[1] + Number(step)
       candidate = candidates.get(itemIndex)
       if itemIndex is -1
-        @setState selectedItemId: candidateParent.id
+        @_updateSelectedItemId(candidateParent.id)
       else if candidate
-        @setState selectedItemId: candidate.id
+        @_updateSelectedItemId(candidate.id)
       else
         parentStep = @_normalizeParentStep(step)
-        candidate = @props.items.get(selectedItemPath[0] + parentStep)
-        @setState selectedItemId: candidate.id
+        parentItemIndex = (selectedItemPath[0] + parentStep) % @props.items.size
+        candidate = @props.items.get(parentItemIndex)
+        @_updateSelectedItemId(candidate.id)
     else
       throw new Error('bad selectedItemPath')
 
@@ -95,17 +110,24 @@ React.createClass
     if @_getItemById(@state.selectedItemId).children?.size > 0
       collapsedItemIds =
         @state.collapsedItemIds.add(@state.selectedItemId)
+
       @setState({ collapsedItemIds })
+      @props.onCollapseItem?(collapsedItemIds)
 
   _expandSelection: ->
     if @_getItemById(@state.selectedItemId).children?.size > 0
       collapsedItemIds =
         @state.collapsedItemIds.delete(@state.selectedItemId)
+
       @setState({ collapsedItemIds })
+      @props.onCollapseItem?(collapsedItemIds)
 
   _handleKeyPress: (e) ->
-    # if e in down up left right ?
-    action = @props.processKeyPress(e.key)
+    # TODO: if e in down up left right ?
+    @_handleShortcut(e.key)
+
+  _handleShortcut: (type) ->
+    action = @props.handler(type, event)
 
     if action?.moveSelection
       @_moveSelection(action.moveSelection)
@@ -116,28 +138,38 @@ React.createClass
 
   _renderListItem: (item, subListPath) ->
     ListItem
-      key: item.id
-      selected: item.id is @state.selectedItemId
+      className: classNames
+        "#{@props.selectedItemClass}": item.id is @state.selectedItemId
+      key: "#{item.id}_#{subListPath.join('')}"
 
-      @props.renderItem(item.id, subListPath)
+      @props.renderItem(item.id, subListPath.toJS())
 
-  _renderSubList: (items, subListPath = []) ->
+  _renderSubList: (items, subListPath = null) ->
+    if !subListPath
+      subListPath = immutable.List()
     renderedList = immutable.List()
     items.forEach (item, index) =>
       if item.children?.size > 0
-        subListPath.push(item.id)
         renderedList = renderedList.push(@_renderListItem(item, subListPath))
 
         if !@state.collapsedItemIds.contains(item.id)
-          renderedList = renderedList.concat(@_renderSubList(item.children))
+          renderedList = renderedList.concat(@_renderSubList(item.children, subListPath.push(item.id)))
       else
-        renderedList = renderedList.push(@_renderListItem(item))
+        renderedList = renderedList.push(@_renderListItem(item, subListPath))
 
     return renderedList
 
   render: ->
+    if @props.useShortcuts
+      Shortcuts
+        name: 'LIST_VIEW'
+        handler: @_handleShortcut
+
+        @_renderSubList(@props.items)
+
+    else
       div
-        tabIndex: 1
+        tabIndex: -1
         onKeyDown: @_handleKeyPress
         # TODO: onClick: @_handleClick
 

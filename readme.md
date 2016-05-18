@@ -4,6 +4,8 @@
 
 ## TODOs
 - refactor logic - support deeper lists
+- add shouldcomponentupdates
 - add tests
 - rethink tabIndices
 - add more examples
+- add prop preskakovani na posledni
