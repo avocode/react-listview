@@ -126,15 +126,18 @@ React.createClass
     # TODO: if e in down up left right ?
     @_handleShortcut(e.key)
 
-  _handleShortcut: (type) ->
+  _handleShortcut: (type, event) ->
     action = @props.handler(type, event)
 
     if action?.moveSelection
       @_moveSelection(action.moveSelection)
+      event.stopPropagation()
     else if action?.collapseSelection
       @_collapseSelection()
+      event.stopPropagation()
     else if action?.expandSelection
       @_expandSelection()
+      event.stopPropagation()
 
   _renderListItem: (item, subListPath) ->
     ListItem
@@ -163,6 +166,7 @@ React.createClass
     if @props.useShortcuts
       Shortcuts
         name: 'LIST_VIEW'
+        stopPropagation: false
         handler: @_handleShortcut
 
         @_renderSubList(@props.items)
