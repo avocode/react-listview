@@ -139,11 +139,15 @@ React.createClass
       @_expandSelection()
       event.stopPropagation()
 
+  _handleClickRequest: (itemId) ->
+    @setState selectedItemId: itemId
+
   _renderListItem: (item, subListPath) ->
     ListItem
       className: classNames
         "#{@props.selectedItemClass}": item.id is @state.selectedItemId
       key: "#{item.id}_#{subListPath.join('')}"
+      onClickRequest: @_handleClickRequest
 
       @props.renderItem(item.id, subListPath.toJS())
 
