@@ -1,4 +1,5 @@
 classNames = require 'classnames'
+ReactDOM = require 'react-dom'
 
 { div } = require 'reactionary'
 
@@ -26,10 +27,10 @@ React.createClass
   _focusSelected: (props) ->
     if props.selected
       @refs['item'].focus()
+      ReactDOM.findDOMNode(this).scrollIntoViewIfNeeded(true)
 
   _handleClick: ->
     @props.onClickRequest(@props.itemId)
-
 
   render: ->
     div
