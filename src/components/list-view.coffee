@@ -1,4 +1,3 @@
-classNames = require 'classnames'
 immutable = require 'immutable'
 Shortcuts = React.createFactory require 'react-shortcuts/component'
 
@@ -151,10 +150,10 @@ React.createClass
 
   _renderListItem: (item, subListPath) ->
     ListItem
-      className: classNames
-        "#{@props.selectedItemClass}": item.id is @state.selectedItemId
       itemId: item.id
       key: "#{item.id}_#{subListPath.join('')}"
+      selected: item.id is @state.selectedItemId
+      selectedClass: @props.selectedItemClass
       onClickRequest: @_handleClickRequest
 
       @props.renderItem(item.id, subListPath.toJS())
@@ -187,6 +186,5 @@ React.createClass
       div
         tabIndex: -1
         onKeyDown: @_handleKeyPress
-        # TODO: onClick: @_handleClick
 
         @_renderSubList(@props.items)
