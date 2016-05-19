@@ -16,21 +16,27 @@ React.createClass
       React.PropTypes.string
     ])
     collapsedItemIds: React.PropTypes.object.isRequired
+
     handler: React.PropTypes.func
     useShortcuts: React.PropTypes.bool
     renderItem: React.PropTypes.func
     selectedItemClass: React.PropTypes.string
-    onCollapseItem: React.PropTypes.func
-    onSelectedItemIdChange: React.PropTypes.func
+    onCollapseChange: React.PropTypes.func.isRequired
+    onSelectItem: React.PropTypes.func.isRequired
     # TODO: add default collapsing prop
 
   getDefaultProps: ->
     selectedItemClass: 'selected'
     useShortcuts: false
 
-
   getInitialState: ->
-    selectedItemId: @props.selectedItemId
+    return @_getState(@props)
+
+  componentWillReceiveProps: (nextProps) ->
+    @setState(@_getState(nextProps))
+
+  _getState: (props) ->
+    selectedItemId: props.selectedItemId
     collapsedItemIds: immutable.Set(@props.collapsedItemIds)
 
   _getItemById: (itemId) ->
@@ -69,8 +75,7 @@ React.createClass
     return isParent and !isFolded
 
   _updateSelectedItemId: (newItemId) ->
-    @setState selectedItemId: newItemId
-    @props.onSelectedItemIdChange?(newItemId)
+    @props.onSelectItem(newItemId)
 
   # TODO: refactor
   _moveSelection: (step) ->
@@ -105,21 +110,9 @@ React.createClass
     else
       throw new Error('bad selectedItemPath')
 
-  _collapseSelection: ->
+  _handleCollapseChangeRequest: ->
     if @_getItemById(@state.selectedItemId).children?.size > 0
-      collapsedItemIds =
-        @state.collapsedItemIds.add(@state.selectedItemId)
-
-      @setState({ collapsedItemIds })
-      @props.onCollapseItem?(collapsedItemIds)
-
-  _expandSelection: ->
-    if @_getItemById(@state.selectedItemId).children?.size > 0
-      collapsedItemIds =
-        @state.collapsedItemIds.delete(@state.selectedItemId)
-
-      @setState({ collapsedItemIds })
-      @props.onCollapseItem?(collapsedItemIds)
+      @props.onCollapseChange(@state.selectedItemId)
 
   _handleKeyPress: (e) ->
     # TODO: if e in down up left right ?
@@ -132,21 +125,15 @@ React.createClass
       @_moveSelection(action.moveSelection)
       event.stopPropagation()
     else if action?.collapseSelection
-      @_collapseSelection()
+      @_handleCollapseChangeRequest()
       event.stopPropagation()
     else if action?.expandSelection
-      @_expandSelection()
+      @_handleCollapseChangeRequest()
       event.stopPropagation()
 
   _handleClickRequest: (itemId) ->
-    if @state.collapsedItemIds.contains(itemId)
-      nextCollapsedItemIds = @state.collapsedItemIds.remove(itemId)
-    else
-      nextCollapsedItemIds = @state.collapsedItemIds.add(itemId)
-
-    @setState
-      selectedItemId: itemId
-      collapsedItemIds: nextCollapsedItemIds
+    @props.onCollapseItem(itemId)
+    @props.onSelectItem(itemId)
 
   _renderListItem: (item, subListPath) ->
     ListItem

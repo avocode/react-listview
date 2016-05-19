@@ -59,11 +59,24 @@ module.exports = React.createClass
 
     return foundItem
 
+  _handleListCollapseChange: (itemId) ->
+    if @state.collapsedItemIds.contains(itemId)
+      nextCollapsedItemIds = @state.collapsedItemIds.remove(itemId)
+    else
+      nextCollapsedItemIds = @state.collapsedItemIds.add(itemId)
+
+    @setState({ collapsedItemIds: nextCollapsedItemIds })
+
+  _handleSelectListItem: (itemId) ->
+    @setState({ selectedItemId: itemId })
+
   render: ->
     ListView
       items: @state.listItems
       selectedItemId: @state.selectedListItemId
       collapsedItemIds: @state.collapsedListItemIds
+      onCollapseChange: @_handleListCollapseChange
+      onSelectItem: @_handleSelectListItem
       handler: @_processShortcut
       useShortcuts: true
       renderItem: (itemId, parentItemIds = []) =>
