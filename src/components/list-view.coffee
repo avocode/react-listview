@@ -16,12 +16,12 @@ React.createClass
       React.PropTypes.string
     ])
     collapsedItemIds: React.PropTypes.object.isRequired
-
     handler: React.PropTypes.func
     useShortcuts: React.PropTypes.bool
     renderItem: React.PropTypes.func
     selectedItemClass: React.PropTypes.string
-    onCollapseChange: React.PropTypes.func.isRequired
+    onCollapseItem: React.PropTypes.func.isRequired
+    onExpandItem: React.PropTypes.func.isRequired
     onSelectItem: React.PropTypes.func.isRequired
     # TODO: add default collapsing prop
 
@@ -37,7 +37,7 @@ React.createClass
 
   _getState: (props) ->
     selectedItemId: props.selectedItemId
-    collapsedItemIds: immutable.Set(@props.collapsedItemIds)
+    collapsedItemIds: immutable.Set(props.collapsedItemIds)
 
   _getItemById: (itemId) ->
     foundItem = null
@@ -110,9 +110,13 @@ React.createClass
     else
       throw new Error('bad selectedItemPath')
 
-  _handleCollapseChangeRequest: ->
+  _expandSelection: ->
     if @_getItemById(@state.selectedItemId).children?.size > 0
-      @props.onCollapseChange(@state.selectedItemId)
+      @props.onExpandItem(@state.selectedItemId)
+
+  _collapseSelection: ->
+    if @_getItemById(@state.selectedItemId).children?.size > 0
+      @props.onCollapseItem(@state.selectedItemId)
 
   _handleKeyPress: (e) ->
     # TODO: if e in down up left right ?
@@ -125,14 +129,18 @@ React.createClass
       @_moveSelection(action.moveSelection)
       event.stopPropagation()
     else if action?.collapseSelection
-      @_handleCollapseChangeRequest()
+      @_collapseSelection()
       event.stopPropagation()
     else if action?.expandSelection
-      @_handleCollapseChangeRequest()
+      @_expandSelection()
       event.stopPropagation()
 
   _handleClickRequest: (itemId) ->
-    @props.onCollapseChange(itemId)
+    if @state.collapsedItemIds.contains(itemId)
+      @props.onExpandItem(itemId)
+    else
+      @props.onCollapseItem(itemId)
+
     @props.onSelectItem(itemId)
 
   _renderListItem: (item, subListPath) ->
