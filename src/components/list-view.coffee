@@ -132,7 +132,7 @@ React.createClass
       event.stopPropagation()
 
   _handleClickRequest: (itemId) ->
-    @props.onCollapseItem(itemId)
+    @props.onCollapseChange(itemId)
     @props.onSelectItem(itemId)
 
   _renderListItem: (item, subListPath) ->
