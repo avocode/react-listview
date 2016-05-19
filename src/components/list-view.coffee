@@ -140,12 +140,20 @@ React.createClass
       event.stopPropagation()
 
   _handleClickRequest: (itemId) ->
-    @setState selectedItemId: itemId
+    if @state.collapsedItemIds.contains(itemId)
+      nextCollapsedItemIds = @state.collapsedItemIds.remove(itemId)
+    else
+      nextCollapsedItemIds = @state.collapsedItemIds.add(itemId)
+
+    @setState
+      selectedItemId: itemId
+      collapsedItemIds: nextCollapsedItemIds
 
   _renderListItem: (item, subListPath) ->
     ListItem
       className: classNames
         "#{@props.selectedItemClass}": item.id is @state.selectedItemId
+      itemId: item.id
       key: "#{item.id}_#{subListPath.join('')}"
       onClickRequest: @_handleClickRequest
 
