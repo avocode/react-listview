@@ -18,16 +18,7 @@ React.createClass
   getDefaultProps: ->
     selected: false
 
-  componentDidMount: ->
-    @_focusSelected(@props)
-
-  componentWillReceiveProps: (nextProps) ->
-    @_focusSelected(nextProps)
-
-  _focusSelected: (props) ->
-    if props.selected
-      @refs['item'].focus()
-      ReactDOM.findDOMNode(this).scrollIntoViewIfNeeded(true)
+  # TODO: add scrollIntoView
 
   _handleClick: ->
     @props.onClickRequest(@props.itemId)
