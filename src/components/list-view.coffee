@@ -19,14 +19,16 @@ React.createClass
     handler: React.PropTypes.func
     useShortcuts: React.PropTypes.bool
     renderItem: React.PropTypes.func
-    selectedItemClass: React.PropTypes.string
+    selectedItemClassName: React.PropTypes.string
     onCollapseItem: React.PropTypes.func.isRequired
     onExpandItem: React.PropTypes.func.isRequired
     onSelectItem: React.PropTypes.func.isRequired
+    itemClassName: React.PropTypes.string
     # TODO: add default collapsing prop
 
   getDefaultProps: ->
-    selectedItemClass: 'selected'
+    itemClassName: ''
+    selectedItemClassName: 'selected'
     useShortcuts: false
 
   getInitialState: ->
@@ -147,8 +149,9 @@ React.createClass
     ListItem
       itemId: item.id
       key: "#{item.id}_#{subListPath.join('')}"
+      className: @props.itemClassName
       selected: item.id is @state.selectedItemId
-      selectedClass: @props.selectedItemClass
+      selectedClassName: @props.selectedItemClassName
       onClickRequest: @_handleClickRequest
 
       @props.renderItem(item.id, subListPath.toJS())
@@ -173,6 +176,7 @@ React.createClass
       Shortcuts
         name: 'LIST_VIEW'
         stopPropagation: false
+        className: @props.className
         handler: @_handleShortcut
 
         @_renderSubList(@props.items)
@@ -180,6 +184,7 @@ React.createClass
     else
       div
         tabIndex: -1
+        className: @props.className
         onKeyDown: @_handleKeyPress
 
         @_renderSubList(@props.items)

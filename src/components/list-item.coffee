@@ -13,7 +13,7 @@ React.createClass
       React.PropTypes.number.isRequired
     ])
     selected: React.PropTypes.bool
-    selectedClass: React.PropTypes.string.isRequired
+    selectedClassName: React.PropTypes.string.isRequired
 
   getDefaultProps: ->
     selected: false
@@ -37,7 +37,8 @@ React.createClass
       tabIndex: 1
       ref: 'item'
       className: classNames
-        "#{@props.selectedClass}": @props.selected
+        "#{@props.className}": true
+        "#{@props.selectedClassName}": @props.selected
       onClick: @_handleClick
 
       @props.children
