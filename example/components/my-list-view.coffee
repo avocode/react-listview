@@ -72,6 +72,9 @@ module.exports = React.createClass
 
   render: ->
     ListView
+      className: 'list-view'
+      itemClassName: 'list-view__item'
+      selectedItemClassName: 'list-view__item--selected'
       items: @state.listItems
       selectedItemId: @state.selectedListItemId
       collapsedItemIds: @state.collapsedListItemIds
