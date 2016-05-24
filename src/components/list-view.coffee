@@ -24,12 +24,14 @@ React.createClass
     onExpandItem: React.PropTypes.func.isRequired
     onSelectItem: React.PropTypes.func.isRequired
     itemClassName: React.PropTypes.string
+    ignoreCollapseClicks: React.PropTypes.bool
     # TODO: add default collapsing prop
 
   getDefaultProps: ->
     itemClassName: ''
     selectedItemClassName: 'selected'
     useShortcuts: false
+    ignoreCollapseClicks: false
 
   getInitialState: ->
     return @_getState(@props)
@@ -138,12 +140,15 @@ React.createClass
       event.stopPropagation()
 
   _handleClickRequest: (itemId) ->
+    @props.onSelectItem(itemId)
+
+    if @props.ignoreCollapseClicks
+      return
+
     if @state.collapsedItemIds.contains(itemId)
       @props.onExpandItem(itemId)
     else
       @props.onCollapseItem(itemId)
-
-    @props.onSelectItem(itemId)
 
   _renderListItem: (item, subListPath) ->
     ListItem
