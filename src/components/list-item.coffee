@@ -25,7 +25,7 @@ React.createClass
 
   render: ->
     div
-      tabIndex: 1
+      tabIndex: -1
       ref: 'item'
       className: classNames
         "#{@props.className}": true
