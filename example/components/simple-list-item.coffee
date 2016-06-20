@@ -1,3 +1,5 @@
+React = require 'react'
+
 { div, span } = require 'reactionary'
 
 module.exports = React.createClass

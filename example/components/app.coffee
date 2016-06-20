@@ -1,4 +1,5 @@
 immutable = require 'immutable'
+React = require 'react'
 
 { div } = require 'reactionary'
 
