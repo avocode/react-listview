@@ -3,7 +3,11 @@ React = require 'react'
 
 { div } = React.DOM
 ListItem = React.createFactory require './list-item'
-Shortcuts = React.createFactory require 'react-shortcuts/component'
+
+try
+  Shortcuts = React.createFactory require 'react-shortcuts/component'
+catch e
+  # throw away
 
 
 module.exports =
