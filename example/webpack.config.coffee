@@ -3,13 +3,13 @@ webpack = require 'webpack'
 
 module.exports =
   entry: [
-      "#{__dirname}/src/index.coffee"
+      "#{__dirname}/main.coffee"
   ]
   devtool: 'inline-source-map'
   debug: false
   output:
-    path: "#{__dirname}/dist"
-    filename: 'index.js'
+    path: "#{__dirname}"
+    filename: 'main.js'
   resolve:
     extensions: ['', '.coffee', '.js']
   resolveLoader:
