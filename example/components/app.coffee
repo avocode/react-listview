@@ -1,9 +1,10 @@
 immutable = require 'immutable'
 React = require 'react'
 
-{ div } = require 'reactionary'
+{ div } = React.DOM
 
 MyListView = React.createFactory require './my-list-view'
+
 
 module.exports = React.createClass
   displayName: 'App'

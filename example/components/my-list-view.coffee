@@ -1,12 +1,13 @@
 immutable = require 'immutable'
 React = require 'react'
 
-{ div } = require 'reactionary'
+{ div } = React.DOM
 
 ListView = React.createFactory require '../../src/'
 SimpleListItem = React.createFactory require './simple-list-item'
 SimpleListSubItem = React.createFactory require './simple-list-subitem'
 FoldableListItem = React.createFactory require './foldable-list-item'
+
 
 module.exports = React.createClass
   displayName: 'MyListView'

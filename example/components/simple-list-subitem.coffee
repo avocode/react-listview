@@ -1,6 +1,7 @@
 React = require 'react'
 
-{ div, span } = require 'reactionary'
+{ div, span } = React.DOM
+
 
 module.exports = React.createClass
   displayName: 'SimpleListSubItem'
@@ -10,6 +11,11 @@ module.exports = React.createClass
 
   render: ->
     div null,
-      span 'subitem: '
-      span "#{@props.item.get('id')}: "
-      span @props.item.get('text')
+      span null,
+        'subitem: '
+
+      span null,
+        "#{@props.item.get('id')}: "
+
+      span null,
+        @props.item.get('text')

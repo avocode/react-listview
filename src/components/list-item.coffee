@@ -2,7 +2,7 @@ classNames = require 'classnames'
 React = require 'react'
 ReactDOM = require 'react-dom'
 
-{ div } = require 'reactionary'
+{ div } = React.DOM
 
 module.exports =
 React.createClass

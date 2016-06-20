@@ -1,6 +1,7 @@
 React = require 'react'
 
-{ div, span } = require 'reactionary'
+{ div, span } = React.DOM
+
 
 module.exports = React.createClass
   displayName: 'FoldableListItem'
@@ -13,4 +14,5 @@ module.exports = React.createClass
 
   render: ->
     div null,
-      span "-> #{@props.item.get('subItems')?.size} subitems"
+      span null,
+        "-> #{@props.item.get('subItems')?.size} subitems"

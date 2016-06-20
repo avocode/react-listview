@@ -2,7 +2,7 @@ immutable = require 'immutable'
 React = require 'react'
 Shortcuts = React.createFactory require 'react-shortcuts/component'
 
-{ div } = require 'reactionary'
+{ div } = React.DOM
 
 ListItem = React.createFactory require './list-item'
 

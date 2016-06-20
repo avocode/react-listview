@@ -1,6 +1,7 @@
 React = require 'react'
 
-{ div, span } = require 'reactionary'
+{ div, span } = React.DOM
+
 
 module.exports = React.createClass
   displayName: 'SimpleListItem'
@@ -11,8 +12,11 @@ module.exports = React.createClass
   render: ->
     div null,
       if @props.item.get('shifter')
-        span "#{@props.item.get('shifter')} "
+        span null,
+          "#{@props.item.get('shifter')} "
       else
-        span "#{@props.item.get('id')}: "
+        span null,
+          "#{@props.item.get('id')}: "
 
-      span @props.item.get('text')
+      span null,
+        @props.item.get('text')
