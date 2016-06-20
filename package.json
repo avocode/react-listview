@@ -15,6 +15,11 @@
   },
   "author": "Jakub Zitny <jakubzitny@avocode.com> (https://github.com/jakubzitny)",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:avocode/react-listview.git",
+    "web": "https://github.com/avocode/react-listview"
+  },
   "dependencies": {
     "classnames": "^2.2.5",
     "immutable": "^3.8.1",
