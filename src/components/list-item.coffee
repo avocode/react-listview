@@ -1,4 +1,5 @@
 classNames = require 'classnames'
+React = require 'react'
 ReactDOM = require 'react-dom'
 
 { div } = require 'reactionary'

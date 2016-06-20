@@ -1,9 +1,11 @@
 immutable = require 'immutable'
+React = require 'react'
 Shortcuts = React.createFactory require 'react-shortcuts/component'
 
 { div } = require 'reactionary'
 
 ListItem = React.createFactory require './list-item'
+
 
 module.exports =
 React.createClass
