@@ -11,10 +11,12 @@ React.createClass
   displayName: 'ListItem'
 
   propTypes:
-    itemId: React.PropTypes.oneOfType([
-      React.PropTypes.string.isRequired
-      React.PropTypes.number.isRequired
-    ])
+    item: React.PropTypes.shape({
+      id: React.PropTypes.oneOfType([
+        React.PropTypes.string
+        React.PropTypes.number
+      ]).isRequired
+    })
     selected: React.PropTypes.bool
     selectedClassName: React.PropTypes.string.isRequired
     onClickRequest: React.PropTypes.func
@@ -25,7 +27,7 @@ React.createClass
   # TODO: add scrollIntoView
 
   _handleClick: ->
-    @props.onClickRequest?(@props.itemId)
+    @props.onClickRequest?(@props.item.id, @props.item)
 
   render: ->
     div

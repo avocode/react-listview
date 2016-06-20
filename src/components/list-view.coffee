@@ -78,8 +78,8 @@ React.createClass
 
     return isParent and !isFolded
 
-  _updateSelectedItemId: (newItemId) ->
-    @props.onSelectItem(newItemId)
+  _updateSelectedItemId: (newItem) ->
+    @props.onSelectItem(newItem.id, newItem)
 
   # TODO: refactor
   _moveSelection: (step) ->
@@ -87,14 +87,14 @@ React.createClass
     selectedItemPath = @_findSelectedItemPath(@props.items)
 
     if @_isUnfoldedParent(selectedItem) and @_normalizeParentStep(step) is 1
-      @_updateSelectedItemId(selectedItem.children.first().id)
+      @_updateSelectedItemId(selectedItem.children.first())
     else if selectedItemPath?.length == 1
       itemIndex = (selectedItemPath[0] + Number(step)) % @props.items.size
       candidate = @props.items.get(itemIndex)
       if @_isUnfoldedParent(candidate) and @_normalizeParentStep(step) is -1
-        @_updateSelectedItemId(candidate.children.last().id)
+        @_updateSelectedItemId(candidate.children.last())
       else if candidate
-        @_updateSelectedItemId(candidate.id)
+        @_updateSelectedItemId(candidate)
       else
         throw new Error('bad top-level selectedItemPath')
     else if selectedItemPath?.length > 1
@@ -103,14 +103,14 @@ React.createClass
       itemIndex = selectedItemPath[1] + Number(step)
       candidate = candidates.get(itemIndex)
       if itemIndex is -1
-        @_updateSelectedItemId(candidateParent.id)
+        @_updateSelectedItemId(candidateParent)
       else if candidate
-        @_updateSelectedItemId(candidate.id)
+        @_updateSelectedItemId(candidate)
       else
         parentStep = @_normalizeParentStep(step)
         parentItemIndex = (selectedItemPath[0] + parentStep) % @props.items.size
         candidate = @props.items.get(parentItemIndex)
-        @_updateSelectedItemId(candidate.id)
+        @_updateSelectedItemId(candidate)
     else
       throw new Error('bad selectedItemPath')
 
@@ -139,8 +139,8 @@ React.createClass
       @_expandSelection()
       event.stopPropagation()
 
-  _handleClickRequest: (itemId) ->
-    @props.onSelectItem(itemId)
+  _handleClickRequest: (itemId, item) ->
+    @props.onSelectItem(itemId, item)
 
     if @props.ignoreCollapseClicks
       return
@@ -152,14 +152,14 @@ React.createClass
 
   _renderListItem: (item, subListPath) ->
     ListItem
-      itemId: item.id
+      item: item
       key: "#{item.id}_#{subListPath.join('')}"
       className: @props.itemClassName
       selected: item.id is @state.selectedItemId
       selectedClassName: @props.selectedItemClassName
       onClickRequest: @_handleClickRequest
 
-      @props.renderItem(item.id, subListPath.toJS())
+      @props.renderItem(item.id, subListPath.toJS(), item)
 
   _renderSubList: (items, subListPath = null) ->
     if !subListPath
