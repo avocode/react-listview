@@ -139,8 +139,8 @@ React.createClass
       @_expandSelection()
       event.stopPropagation()
 
-  _handleClickRequest: (itemId) ->
-    @props.onSelectItem(itemId)
+  _handleClickRequest: (itemId, item) ->
+    @props.onSelectItem(itemId, item)
 
     if @props.ignoreCollapseClicks
       return
@@ -152,14 +152,14 @@ React.createClass
 
   _renderListItem: (item, subListPath) ->
     ListItem
-      itemId: item.id
+      item: item
       key: "#{item.id}_#{subListPath.join('')}"
       className: @props.itemClassName
       selected: item.id is @state.selectedItemId
       selectedClassName: @props.selectedItemClassName
       onClickRequest: @_handleClickRequest
 
-      @props.renderItem(item.id, subListPath.toJS())
+      @props.renderItem(item.id, subListPath.toJS(), item)
 
   _renderSubList: (items, subListPath = null) ->
     if !subListPath
