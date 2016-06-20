@@ -11,7 +11,7 @@
     "build:example": "webpack --config example/webpack.config.coffee",
     "clean": "rm index.js example/main.js",
     "prepublish": "npm run build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test/"
   },
   "author": "Jakub Zitny <jakubzitny@avocode.com> (https://github.com/jakubzitny)",
   "license": "ISC",
