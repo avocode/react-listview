@@ -2,11 +2,10 @@ immutable = require 'immutable'
 React = require 'react'
 
 { div } = React.DOM
-
 ListView = React.createFactory require '../../src/'
+FoldableListItem = React.createFactory require './foldable-list-item'
 SimpleListItem = React.createFactory require './simple-list-item'
 SimpleListSubItem = React.createFactory require './simple-list-subitem'
-FoldableListItem = React.createFactory require './foldable-list-item'
 
 
 module.exports = React.createClass
@@ -79,11 +78,11 @@ module.exports = React.createClass
       items: @state.listItems
       selectedItemId: @state.selectedListItemId
       collapsedItemIds: @state.collapsedListItemIds
+      useShortcuts: true
+      handler: @_processShortcut
       onCollapseItem: @_handleCollapseListItem
       onExpandItem: @_handleExpandListItem
       onSelectItem: @_handleSelectListItem
-      handler: @_processShortcut
-      useShortcuts: true
       renderItem: (itemId, parentItemIds = []) =>
         item = @_getItemById(itemId)
         if parentItemIds.length == 0

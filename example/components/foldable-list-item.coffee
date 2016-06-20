@@ -7,7 +7,8 @@ module.exports = React.createClass
   displayName: 'FoldableListItem'
 
   propTypes:
-    item: React.PropTypes.object
+    item: React.PropTypes.object.isRequired
+    folded: React.PropTypes.bool
 
   getDefaultProps: ->
     folded: true

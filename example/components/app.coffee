@@ -2,7 +2,6 @@ immutable = require 'immutable'
 React = require 'react'
 
 { div } = React.DOM
-
 MyListView = React.createFactory require './my-list-view'
 
 
@@ -37,9 +36,6 @@ module.exports = React.createClass
     )
 
     return immutable.List.of(
-      # @_createItem(1, 'first item')
-      # @_createItem(2, 'second item')
-      # @_createItem(3, 'third item')
       @_createItem(1, 'foldable item', subItems)
       @_createItem(2, 'foldable item', subItems2)
     )

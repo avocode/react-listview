@@ -7,7 +7,7 @@ module.exports = React.createClass
   displayName: 'SimpleListItem'
 
   propTypes:
-    item: React.PropTypes.object
+    item: React.PropTypes.object.isRequired
 
   render: ->
     div null,
