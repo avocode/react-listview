@@ -1,6 +1,9 @@
 node_modules/
 dist/
 
+example/main.js
+index.js
+
 *.swp
 *.swo
 *.log
