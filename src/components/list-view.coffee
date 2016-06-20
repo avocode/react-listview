@@ -1,10 +1,9 @@
 immutable = require 'immutable'
 React = require 'react'
-Shortcuts = React.createFactory require 'react-shortcuts/component'
 
 { div } = React.DOM
-
 ListItem = React.createFactory require './list-item'
+Shortcuts = React.createFactory require 'react-shortcuts/component'
 
 
 module.exports =
@@ -18,16 +17,15 @@ React.createClass
       React.PropTypes.string
     ])
     collapsedItemIds: React.PropTypes.object.isRequired
-    handler: React.PropTypes.func
     useShortcuts: React.PropTypes.bool
-    renderItem: React.PropTypes.func
+    itemClassName: React.PropTypes.string
     selectedItemClassName: React.PropTypes.string
+    ignoreCollapseClicks: React.PropTypes.bool
+    handler: React.PropTypes.func
+    renderItem: React.PropTypes.func
     onCollapseItem: React.PropTypes.func.isRequired
     onExpandItem: React.PropTypes.func.isRequired
     onSelectItem: React.PropTypes.func.isRequired
-    itemClassName: React.PropTypes.string
-    ignoreCollapseClicks: React.PropTypes.bool
-    # TODO: add default collapsing prop
 
   getDefaultProps: ->
     itemClassName: ''
@@ -70,7 +68,7 @@ React.createClass
 
     return path
 
-  # convert foldable item's (parent's) step to +1 or -1
+  # NOTE: Convert foldable item's (parent's) step to +1 or -1.
   _normalizeParentStep: (step) ->
     return Math.sign(step)
 

@@ -1,8 +1,10 @@
-classNames = require 'classnames'
 React = require 'react'
 ReactDOM = require 'react-dom'
 
 { div } = React.DOM
+
+classNames = require 'classnames'
+
 
 module.exports =
 React.createClass
@@ -15,6 +17,7 @@ React.createClass
     ])
     selected: React.PropTypes.bool
     selectedClassName: React.PropTypes.string.isRequired
+    onClickRequest: React.PropTypes.func
 
   getDefaultProps: ->
     selected: false
@@ -22,7 +25,7 @@ React.createClass
   # TODO: add scrollIntoView
 
   _handleClick: ->
-    @props.onClickRequest(@props.itemId)
+    @props.onClickRequest?(@props.itemId)
 
   render: ->
     div
