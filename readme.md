@@ -10,6 +10,10 @@
 npm i react-listview-keys --save
 ```
 
+## Example
+
+![React ListView example](https://s3.amazonaws.com/f.cl.ly/items/322J3v0u1n2l39153327/example.gif?v=fe99b357)
+
 ```
 ListView = require 'react-listview'
 
