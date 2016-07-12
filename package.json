@@ -10,7 +10,7 @@
     "build": "webpack --config webpack.config.coffee",
     "build:example": "webpack --config example/webpack.config.coffee",
     "clean": "rm index.js example/main.js",
-    "prepublish": "npm run build",
+    "prepublish": "coffee -o dist/ src/",
     "test": "mocha test/"
   },
   "author": "Jakub Zitny <jakubzitny@avocode.com> (https://github.com/jakubzitny)",
