@@ -23,8 +23,8 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "immutable": "^3.8.1",
-    "react": "^0.14.8",
-    "react-dom": "^0.14.8"
+    "react": "^15.3.1",
+    "react-dom": "^15.3.1"
   },
   "peerDependencies": {
     "react-shortcuts": "0.x.x"
@@ -36,7 +36,7 @@
     "enzyme": "^2.3.0",
     "lodash.assign": "^4.0.9",
     "mocha": "^2.5.3",
-    "react-addons-test-utils": "^0.14.8",
+    "react-addons-test-utils": "^15.3.1",
     "sinon": "^1.17.4",
     "webpack": "^1.13.0",
     "webpack-dev-server": "^1.14.1"
