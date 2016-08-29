@@ -1,6 +1,6 @@
 {
   "name": "@avocode/react-listview",
-  "version": "0.5.3",
+  "version": "0.6.0",
   "description": "Create List components with keyboard support",
   "main": "dist/index.js",
   "directories": {
