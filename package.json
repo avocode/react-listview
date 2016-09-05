@@ -27,7 +27,7 @@
     "react-dom": "^15.3.1"
   },
   "peerDependencies": {
-    "react-shortcuts": "0.x.x"
+    "react-shortcuts": "x.x.x"
   },
   "devDependencies": {
     "chai": "^3.5.0",
