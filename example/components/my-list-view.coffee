@@ -36,17 +36,6 @@ module.exports = React.createClass
       when 'ArrowRight'
         return { expandSelection: true }
 
-  _processShortcut: (type) ->
-    switch type
-      when 'LIST_VIEW:UP'
-        return { moveSelection: -1 }
-      when 'LIST_VIEW:DOWN'
-        return { moveSelection: +1 }
-      when 'LIST_VIEW:LEFT'
-        return { collapseSelection: true }
-      when 'LIST_VIEW:RIGHT'
-        return { expandSelection: true }
-
   _getItemById: (itemId) ->
     foundItem = null
     @props.things.forEach (item) ->
@@ -78,8 +67,7 @@ module.exports = React.createClass
       items: @state.listItems
       selectedItemId: @state.selectedListItemId
       collapsedItemIds: @state.collapsedListItemIds
-      useShortcuts: true
-      handler: @_processShortcut
+      handler: @_handleListKeyPress
       onCollapseItem: @_handleCollapseListItem
       onExpandItem: @_handleExpandListItem
       onSelectItem: @_handleSelectListItem

@@ -4,11 +4,6 @@ React = require 'react'
 { div } = React.DOM
 ListItem = React.createFactory require './list-item'
 
-try
-  Shortcuts = React.createFactory require 'react-shortcuts/component'
-catch e
-  # throw away
-
 
 module.exports =
 React.createClass
@@ -21,7 +16,6 @@ React.createClass
       React.PropTypes.string
     ])
     collapsedItemIds: React.PropTypes.object.isRequired
-    useShortcuts: React.PropTypes.bool
     itemClassName: React.PropTypes.string
     selectedItemClassName: React.PropTypes.string
     ignoreCollapseClicks: React.PropTypes.bool
@@ -34,7 +28,6 @@ React.createClass
   getDefaultProps: ->
     itemClassName: ''
     selectedItemClassName: 'selected'
-    useShortcuts: false
     ignoreCollapseClicks: false
 
   getInitialState: ->
@@ -128,7 +121,7 @@ React.createClass
 
   _handleKeyPress: (e) ->
     # TODO: if e in down up left right ?
-    @_handleShortcut(e.key)
+    @_handleShortcut(e.key, e)
 
   _handleShortcut: (type, event) ->
     action = @props.handler(type, event)
@@ -181,19 +174,9 @@ React.createClass
     return renderedList
 
   render: ->
-    if @props.useShortcuts
-      Shortcuts
-        name: 'LIST_VIEW'
-        stopPropagation: false
-        className: @props.className
-        handler: @_handleShortcut
+    div
+      tabIndex: -1
+      className: @props.className
+      onKeyDown: @_handleKeyPress
 
-        @_renderSubList(@props.items)
-
-    else
-      div
-        tabIndex: -1
-        className: @props.className
-        onKeyDown: @_handleKeyPress
-
-        @_renderSubList(@props.items)
+      @_renderSubList(@props.items)

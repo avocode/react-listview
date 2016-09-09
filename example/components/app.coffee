@@ -8,12 +8,6 @@ MyListView = React.createFactory require './my-list-view'
 module.exports = React.createClass
   displayName: 'App'
 
-  childContextTypes:
-    shortcuts: React.PropTypes.object.isRequired
-
-  getChildContext: ->
-    shortcuts: @props.shortcuts
-
   _createSubItem: (id, text) ->
     shifter = "..."
     return immutable.Map({ id, text, shifter })
