@@ -22,9 +22,12 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
-    "immutable": "^3.8.1",
-    "react": "^15.3.1",
-    "react-dom": "^15.3.1"
+    "immutable": "^3.8.1"
+  },
+  "peerDependencies": {
+    "react": "^0.14.8 || ^15",
+    "react-dom": "^0.14.8 || ^15"
+
   },
   "devDependencies": {
     "chai": "^3.5.0",
