@@ -1,3 +1,6 @@
+before_script:
+  - npm i react react-dom
+
 language: node_js
 node_js:
   - "6"
