@@ -14,7 +14,7 @@ npm i react-listview-keys --save
 
 ![React ListView example](https://s3.amazonaws.com/f.cl.ly/items/322J3v0u1n2l39153327/example.gif?v=fe99b357)
 
-```
+```coffee
 ListView = require 'react-listview'
 
 ListView
@@ -42,7 +42,7 @@ ListView
 ```
 
 
-### Props
+### Props
 
 - `className` - CSS class of the whole ListView component
 - `itemClassName` - CSS class of non-selected ListItem
@@ -59,7 +59,7 @@ ListView
 - `renderItem` - function that renders the item (passed as callback so  apps can handle the rendering of the main content itself)
 
 
-## Development
+## Development
 
 ```
 git clone git@github.com:avocode/react-listview.git
@@ -70,6 +70,7 @@ npm install
 
 
 Run tests:
+
 ```
 npm test
 ```
