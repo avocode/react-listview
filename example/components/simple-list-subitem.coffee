@@ -1,13 +1,16 @@
 React = require 'react'
+ReactDOM = require 'react-dom-factories'
+createClass = require 'create-react-class'
+PropTypes = require 'prop-types';
 
-{ div, span } = React.DOM
+{ div, span } = ReactDOM
 
 
-module.exports = React.createClass
+module.exports = createClass
   displayName: 'SimpleListSubItem'
 
   propTypes:
-    item: React.PropTypes.object.isRequired
+    item: PropTypes.object.isRequired
 
   render: ->
     div null,
