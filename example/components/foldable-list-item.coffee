@@ -1,14 +1,17 @@
 React = require 'react'
+ReactDOM = require 'react-dom-factories'
+createClass = require 'create-react-class'
+PropTypes = require 'prop-types';
 
-{ div, span } = React.DOM
+{ div, span } = ReactDOM
 
 
-module.exports = React.createClass
+module.exports = createClass
   displayName: 'FoldableListItem'
 
   propTypes:
-    item: React.PropTypes.object.isRequired
-    folded: React.PropTypes.bool
+    item: PropTypes.object.isRequired
+    folded: PropTypes.bool
 
   getDefaultProps: ->
     folded: true

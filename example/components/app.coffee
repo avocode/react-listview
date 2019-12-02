@@ -1,11 +1,13 @@
 immutable = require 'immutable'
 React = require 'react'
+ReactDOM = require 'react-dom-factories'
+createClass = require 'create-react-class'
 
-{ div } = React.DOM
+{ div } = ReactDOM
 MyListView = React.createFactory require './my-list-view'
 
 
-module.exports = React.createClass
+module.exports = createClass
   displayName: 'App'
 
   _createSubItem: (id, text) ->

@@ -1,18 +1,21 @@
 immutable = require 'immutable'
 React = require 'react'
+ReactDOM = require 'react-dom-factories'
+createClass = require 'create-react-class'
+PropTypes = require 'prop-types';
 
-{ div } = React.DOM
+{ div } = ReactDOM
 ListView = React.createFactory require '../../src/'
 FoldableListItem = React.createFactory require './foldable-list-item'
 SimpleListItem = React.createFactory require './simple-list-item'
 SimpleListSubItem = React.createFactory require './simple-list-subitem'
 
 
-module.exports = React.createClass
+module.exports = createClass
   displayName: 'MyListView'
 
   propTypes:
-    things: React.PropTypes.object.isRequired
+    things: PropTypes.object.isRequired
 
   getInitialState: ->
     listItems: @_createListItems(@props.things)

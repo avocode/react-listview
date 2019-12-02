@@ -1,11 +1,14 @@
 assign = require 'lodash.assign'
 chai = require 'chai'
 enzyme = require 'enzyme'
+Adapter = require 'enzyme-adapter-react-16'
 immutable = require 'immutable'
 React = require 'react'
 sinon = require 'sinon'
 
 ListItem = require '../../src/components/list-item'
+
+enzyme.configure({ adapter: new Adapter() });
 
 expect = chai.expect
 

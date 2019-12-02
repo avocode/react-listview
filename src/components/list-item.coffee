@@ -1,25 +1,27 @@
 React = require 'react'
-ReactDOM = require 'react-dom'
+ReactDOM = require 'react-dom-factories'
+PropTypes = require 'prop-types';
+createClass = require 'create-react-class'
 
-{ div } = React.DOM
+{ div } = ReactDOM
 
 classNames = require 'classnames'
 
 
 module.exports =
-React.createClass
+createClass
   displayName: 'ListItem'
 
   propTypes:
-    item: React.PropTypes.shape({
-      id: React.PropTypes.oneOfType([
-        React.PropTypes.string
-        React.PropTypes.number
+    item: PropTypes.shape({
+      id: PropTypes.oneOfType([
+        PropTypes.string
+        PropTypes.number
       ]).isRequired
     })
-    selected: React.PropTypes.bool
-    selectedClassName: React.PropTypes.string.isRequired
-    onClickRequest: React.PropTypes.func
+    selected: PropTypes.bool
+    selectedClassName: PropTypes.string.isRequired
+    onClickRequest: PropTypes.func
 
   getDefaultProps: ->
     selected: false
