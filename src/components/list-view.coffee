@@ -1,29 +1,32 @@
 immutable = require 'immutable'
 React = require 'react'
+ReactDOM = require 'react-dom-factories'
+PropTypes = require 'prop-types';
+createClass = require 'create-react-class'
 
-{ div } = React.DOM
+{ div } = ReactDOM
 ListItem = React.createFactory require './list-item'
 
 
 module.exports =
-React.createClass
+createClass
   displayName: 'ListView'
 
   propTypes:
-    items: React.PropTypes.object.isRequired
-    selectedItemId: React.PropTypes.oneOfType([
-      React.PropTypes.number
-      React.PropTypes.string
+    items: PropTypes.object.isRequired
+    selectedItemId: PropTypes.oneOfType([
+     PropTypes.number
+     PropTypes.string
     ])
-    collapsedItemIds: React.PropTypes.object.isRequired
-    itemClassName: React.PropTypes.string
-    selectedItemClassName: React.PropTypes.string
-    ignoreCollapseClicks: React.PropTypes.bool
-    handler: React.PropTypes.func
-    renderItem: React.PropTypes.func
-    onCollapseItem: React.PropTypes.func.isRequired
-    onExpandItem: React.PropTypes.func.isRequired
-    onSelectItem: React.PropTypes.func.isRequired
+    collapsedItemIds: PropTypes.object.isRequired
+    itemClassName: PropTypes.string
+    selectedItemClassName: PropTypes.string
+    ignoreCollapseClicks: PropTypes.bool
+    handler: PropTypes.func
+    renderItem: PropTypes.func
+    onCollapseItem: PropTypes.func.isRequired
+    onExpandItem: PropTypes.func.isRequired
+    onSelectItem: PropTypes.func.isRequired
 
   getDefaultProps: ->
     itemClassName: ''
